@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registration Analytics Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">DataHacks 2026</p>
+          <h1>Registration Analytics Dashboard</h1>
+          <p class="hero-copy">
+            Live counts pulled from the published Google Sheets CSV used by the registration form.
+          </p>
+        </div>
+        <div class="hero-actions">
+          <button id="refresh-button" type="button">Refresh now</button>
+          <p id="status-line">Loading registrations...</p>
+        </div>
+      </header>
+
+      <main id="dashboard" class="dashboard hidden">
+        <section class="card goal-card">
+          <div class="section-heading">
+            <h2>Goal</h2>
+            <p id="goal-caption">Tracking progress toward the target attendee count.</p>
+          </div>
+          <div class="goal-grid">
+            <div class="metric-tile accent">
+              <span class="metric-label">Total registrations</span>
+              <strong id="total-registrations">0</strong>
+            </div>
+            <div class="metric-tile">
+              <span class="metric-label">Goal progress</span>
+              <strong id="goal-progress">0%</strong>
+            </div>
+            <div class="metric-tile">
+              <span class="metric-label">Universities represented</span>
+              <strong id="university-count">0</strong>
+            </div>
+            <div class="metric-tile">
+              <span class="metric-label">First-time hackers</span>
+              <strong id="first-hack-count">0</strong>
+            </div>
+          </div>
+          <div class="progress-track" aria-hidden="true">
+            <div id="goal-bar" class="progress-fill"></div>
+          </div>
+        </section>
+
+        <section class="card-grid">
+          <section class="card"><div class="section-heading"><h2>Tracks</h2></div><div id="tracks-chart"></div></section>
+          <section class="card"><div class="section-heading"><h2>Program of Study</h2></div><div id="majors-chart"></div></section>
+          <section class="card"><div class="section-heading"><h2>Minors</h2></div><div id="minors-chart"></div></section>
+          <section class="card"><div class="section-heading"><h2>Level of Study</h2><p>Graduation year is not present in this sheet.</p></div><div id="study-chart"></div></section>
+          <section class="card"><div class="section-heading"><h2>University</h2></div><div id="university-chart"></div></section>
+          <section class="card"><div class="section-heading"><h2>How They Heard?</h2></div><div id="referral-chart"></div></section>
+          <section class="card"><div class="section-heading"><h2>First Hackathon?</h2></div><div id="first-hack-chart"></div></section>
+          <section class="card"><div class="section-heading"><h2>T-Shirt Size</h2></div><div id="shirt-chart"></div></section>
+          <section class="card"><div class="section-heading"><h2>Overnight Stay</h2></div><div id="overnight-chart"></div></section>
+          <section class="card"><div class="section-heading"><h2>Food Restrictions</h2></div><div id="food-chart"></div></section>
+          <section class="card"><div class="section-heading"><h2>Looking Forward To...</h2></div><div id="looking-forward-chart"></div></section>
+          <section class="card"><div class="section-heading"><h2>Biotech Focus</h2></div><div id="biotech-chart"></div></section>
+          <section class="card"><div class="section-heading"><h2>Suggested Activities</h2></div><div id="activities-chart"></div></section>
+          <section class="card"><div class="section-heading"><h2>Club Memberships</h2></div><div id="clubs-chart"></div></section>
+        </section>
+
+        <section class="skills-section">
+          <div class="section-heading">
+            <h2>Skills Snapshot</h2>
+            <p>Each chart summarizes self-reported experience level distributions.</p>
+          </div>
+          <div class="card-grid">
+            <section class="card"><div class="section-heading"><h3>Coding & Data</h3></div><div id="coding-chart"></div></section>
+            <section class="card"><div class="section-heading"><h3>Embedded Systems</h3></div><div id="embedded-chart"></div></section>
+            <section class="card"><div class="section-heading"><h3>UI/UX & Web</h3></div><div id="uiux-chart"></div></section>
+            <section class="card"><div class="section-heading"><h3>Product & Presentations</h3></div><div id="product-chart"></div></section>
+          </div>
+        </section>
+
+        <section class="skills-section">
+          <div class="section-heading">
+            <h2>Mentor / Judge Registrations</h2>
+            <p id="mentor-status">Live counts from the mentor and judge registration sheet.</p>
+          </div>
+          <div class="card-grid mentor-grid">
+            <section class="card"><div class="section-heading"><h3>Company</h3></div><div id="mentor-company-chart"></div></section>
+            <section class="card"><div class="section-heading"><h3>Role</h3></div><div id="mentor-role-chart"></div></section>
+            <section class="card"><div class="section-heading"><h3>Participation</h3></div><div id="mentor-participation-chart"></div></section>
+            <section class="card"><div class="section-heading"><h3>UCSD Affiliation</h3></div><div id="mentor-ucsd-chart"></div></section>
+          </div>
+        </section>
+      </main>
+
+      <section id="error-panel" class="card hidden"></section>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
