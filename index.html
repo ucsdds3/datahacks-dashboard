@@ -3,107 +3,277 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Registration Analytics Dashboard</title>
+    <title>DataHacks 2026 — Registration Analytics</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
+    <div class="noise"></div>
+
     <div class="page-shell">
-      <header class="hero">
-        <div>
-          <p class="eyebrow">DataHacks 2026</p>
-          <h1>Registration Analytics Dashboard</h1>
-          <p class="hero-copy">
-            Live counts pulled from the published Google Sheets CSV used by the registration form.
-          </p>
+
+      <!-- SIDEBAR NAV -->
+      <nav class="sidebar">
+        <div class="sidebar-logo">
+          <span class="sidebar-logo-mark">DH</span>
+          <span class="sidebar-logo-year">2026</span>
         </div>
-        <div class="hero-actions">
-          <button id="refresh-button" type="button">Refresh now</button>
-          <p id="status-line">Loading registrations...</p>
+        <div class="sidebar-divider"></div>
+        <ul class="sidebar-nav">
+          <li><a href="#section-goal" class="nav-link active">Goal</a></li>
+          <li><a href="#section-registration" class="nav-link">Registration</a></li>
+          <li><a href="#section-skills" class="nav-link">Skills</a></li>
+          <li><a href="#section-mentors" class="nav-link">Mentors</a></li>
+        </ul>
+        <div class="sidebar-bottom">
+          <button id="refresh-button" type="button" class="refresh-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+            Refresh
+          </button>
+          <p id="status-line" class="status-line">Loading…</p>
         </div>
-      </header>
+      </nav>
 
-      <main id="dashboard" class="dashboard hidden">
-        <section class="card goal-card">
-          <div class="section-heading">
-            <h2>Goal</h2>
-            <p id="goal-caption">Tracking progress toward the target attendee count.</p>
+      <!-- MAIN CONTENT -->
+      <div class="content-area">
+
+        <!-- TOP HEADER BAR -->
+        <header class="topbar">
+          <div class="topbar-left">
+            <h1 class="page-title">Registration <em>Analytics</em></h1>
+            <span class="live-pill">
+              <span class="live-dot"></span>
+              Live
+            </span>
           </div>
-          <div class="goal-grid">
-            <div class="metric-tile accent">
-              <span class="metric-label">Total registrations</span>
-              <strong id="total-registrations">0</strong>
+          <div class="topbar-right">
+            <span class="topbar-date" id="topbar-date"></span>
+          </div>
+        </header>
+
+        <main id="dashboard" class="dashboard hidden">
+
+          <!-- GOAL SECTION -->
+          <section id="section-goal" class="section">
+            <div class="section-label">
+              <span>01</span> Goal & Overview
             </div>
-            <div class="metric-tile">
-              <span class="metric-label">Goal progress</span>
-              <strong id="goal-progress">0%</strong>
+
+            <div class="kpi-row">
+              <div class="kpi-card kpi-primary">
+                <span class="kpi-label">Total Registrations</span>
+                <strong class="kpi-value" id="total-registrations">—</strong>
+                <div class="kpi-foot" id="goal-caption">Tracking toward goal</div>
+              </div>
+              <div class="kpi-card">
+                <span class="kpi-label">Goal Progress</span>
+                <strong class="kpi-value" id="goal-progress">—</strong>
+                <div class="kpi-foot">of 400 target</div>
+              </div>
+              <div class="kpi-card">
+                <span class="kpi-label">Universities</span>
+                <strong class="kpi-value" id="university-count">—</strong>
+                <div class="kpi-foot">represented</div>
+              </div>
+              <div class="kpi-card">
+                <span class="kpi-label">First-Time Hackers</span>
+                <strong class="kpi-value" id="first-hack-count">—</strong>
+                <div class="kpi-foot">new to university hackathons</div>
+              </div>
             </div>
-            <div class="metric-tile">
-              <span class="metric-label">Universities represented</span>
-              <strong id="university-count">0</strong>
+
+            <div class="progress-container">
+              <div class="progress-header">
+                <span class="progress-label">Registration progress</span>
+                <span class="progress-pct" id="goal-progress-dup">—</span>
+              </div>
+              <div class="progress-track">
+                <div id="goal-bar" class="progress-fill"></div>
+              </div>
             </div>
-            <div class="metric-tile">
-              <span class="metric-label">First-time hackers</span>
-              <strong id="first-hack-count">0</strong>
+          </section>
+
+          <!-- REGISTRATION CHARTS -->
+          <section id="section-registration" class="section">
+            <div class="section-label">
+              <span>02</span> Registration Breakdown
             </div>
-          </div>
-          <div class="progress-track" aria-hidden="true">
-            <div id="goal-bar" class="progress-fill"></div>
-          </div>
-        </section>
 
-        <section class="card-grid">
-          <section class="card"><div class="section-heading"><h2>Tracks</h2></div><div id="tracks-chart"></div></section>
-          <section class="card"><div class="section-heading"><h2>Program of Study</h2></div><div id="majors-chart"></div></section>
-          <section class="card"><div class="section-heading"><h2>Minors</h2></div><div id="minors-chart"></div></section>
-          <section class="card"><div class="section-heading"><h2>Level of Study</h2><p>Graduation year is not present in this sheet.</p></div><div id="study-chart"></div></section>
-          <section class="card"><div class="section-heading"><h2>University</h2></div><div id="university-chart"></div></section>
-          <section class="card"><div class="section-heading"><h2>How They Heard?</h2></div><div id="referral-chart"></div></section>
-          <section class="card"><div class="section-heading"><h2>First Hackathon?</h2></div><div id="first-hack-chart"></div></section>
-          <section class="card"><div class="section-heading"><h2>T-Shirt Size</h2></div><div id="shirt-chart"></div></section>
-          <section class="card"><div class="section-heading"><h2>Overnight Stay</h2></div><div id="overnight-chart"></div></section>
-          <section class="card"><div class="section-heading"><h2>Food Restrictions</h2></div><div id="food-chart"></div></section>
-          <section class="card"><div class="section-heading"><h2>Looking Forward To...</h2></div><div id="looking-forward-chart"></div></section>
-          <section class="card"><div class="section-heading"><h2>Biotech Focus</h2></div><div id="biotech-chart"></div></section>
-          <section class="card"><div class="section-heading"><h2>Suggested Activities</h2></div><div id="activities-chart"></div></section>
-          <section class="card"><div class="section-heading"><h2>Club Memberships</h2></div><div id="clubs-chart"></div></section>
-        </section>
+            <div class="chart-grid">
+              <div class="chart-card chart-card--wide">
+                <div class="chart-card-header">
+                  <h3>University</h3>
+                </div>
+                <div id="university-chart"></div>
+              </div>
 
-        <section class="skills-section">
-          <div class="section-heading">
-            <h2>Skills Snapshot</h2>
-            <p>Each chart summarizes self-reported experience level distributions.</p>
-          </div>
-          <div class="card-grid">
-            <section class="card"><div class="section-heading"><h3>Coding & Data</h3></div><div id="coding-chart"></div></section>
-            <section class="card"><div class="section-heading"><h3>Embedded Systems</h3></div><div id="embedded-chart"></div></section>
-            <section class="card"><div class="section-heading"><h3>UI/UX & Web</h3></div><div id="uiux-chart"></div></section>
-            <section class="card"><div class="section-heading"><h3>Product & Presentations</h3></div><div id="product-chart"></div></section>
-          </div>
-        </section>
+              <div class="chart-card">
+                <div class="chart-card-header">
+                  <h3>Domain Tracks</h3>
+                  <span class="chart-badge">multi-select</span>
+                </div>
+                <div id="tracks-chart"></div>
+              </div>
 
-        <section class="skills-section">
-          <div class="section-heading">
-            <h2>Mentor / Judge Registrations</h2>
-            <p id="mentor-status">Live counts from the mentor and judge registration sheet.</p>
-          </div>
-          <div class="card-grid mentor-grid">
-            <section class="card"><div class="section-heading"><h3>Company</h3></div><div id="mentor-company-chart"></div></section>
-            <section class="card"><div class="section-heading"><h3>Role</h3></div><div id="mentor-role-chart"></div></section>
-            <section class="card"><div class="section-heading"><h3>Participation</h3></div><div id="mentor-participation-chart"></div></section>
-            <section class="card"><div class="section-heading"><h3>UCSD Affiliation</h3></div><div id="mentor-ucsd-chart"></div></section>
-          </div>
-        </section>
-      </main>
+              <div class="chart-card">
+                <div class="chart-card-header">
+                  <h3>Level of Study</h3>
+                </div>
+                <div id="study-chart"></div>
+              </div>
 
-      <section id="error-panel" class="card hidden"></section>
+              <div class="chart-card">
+                <div class="chart-card-header">
+                  <h3>Program of Study</h3>
+                </div>
+                <div id="majors-chart"></div>
+              </div>
+
+              <div class="chart-card">
+                <div class="chart-card-header">
+                  <h3>Minors</h3>
+                </div>
+                <div id="minors-chart"></div>
+              </div>
+
+              <div class="chart-card">
+                <div class="chart-card-header">
+                  <h3>How They Heard</h3>
+                </div>
+                <div id="referral-chart"></div>
+              </div>
+
+              <div class="chart-card">
+                <div class="chart-card-header">
+                  <h3>First Hackathon?</h3>
+                </div>
+                <div id="first-hack-chart"></div>
+              </div>
+
+              <div class="chart-card">
+                <div class="chart-card-header">
+                  <h3>T-Shirt Size</h3>
+                </div>
+                <div id="shirt-chart"></div>
+              </div>
+
+              <div class="chart-card">
+                <div class="chart-card-header">
+                  <h3>Overnight Stay</h3>
+                </div>
+                <div id="overnight-chart"></div>
+              </div>
+
+              <div class="chart-card">
+                <div class="chart-card-header">
+                  <h3>Food Restrictions</h3>
+                </div>
+                <div id="food-chart"></div>
+              </div>
+
+              <div class="chart-card">
+                <div class="chart-card-header">
+                  <h3>Looking Forward To</h3>
+                </div>
+                <div id="looking-forward-chart"></div>
+              </div>
+
+              <div class="chart-card">
+                <div class="chart-card-header">
+                  <h3>Biotech Focus</h3>
+                </div>
+                <div id="biotech-chart"></div>
+              </div>
+
+              <div class="chart-card">
+                <div class="chart-card-header">
+                  <h3>Suggested Activities</h3>
+                </div>
+                <div id="activities-chart"></div>
+              </div>
+
+              <div class="chart-card">
+                <div class="chart-card-header">
+                  <h3>Club Memberships</h3>
+                  <span class="chart-badge">answered yes</span>
+                </div>
+                <div id="clubs-chart"></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- SKILLS -->
+          <section id="section-skills" class="section">
+            <div class="section-label">
+              <span>03</span> Skills Snapshot
+            </div>
+            <p class="section-desc">Self-reported experience levels across four skill categories.</p>
+            <div class="chart-grid chart-grid--4">
+              <div class="chart-card">
+                <div class="chart-card-header"><h3>Coding &amp; Data</h3></div>
+                <div id="coding-chart"></div>
+              </div>
+              <div class="chart-card">
+                <div class="chart-card-header"><h3>Embedded Systems</h3></div>
+                <div id="embedded-chart"></div>
+              </div>
+              <div class="chart-card">
+                <div class="chart-card-header"><h3>UI/UX &amp; Web</h3></div>
+                <div id="uiux-chart"></div>
+              </div>
+              <div class="chart-card">
+                <div class="chart-card-header"><h3>Product &amp; Presentations</h3></div>
+                <div id="product-chart"></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- MENTORS -->
+          <section id="section-mentors" class="section">
+            <div class="section-label">
+              <span>04</span> Mentors &amp; Judges
+            </div>
+            <p class="section-desc" id="mentor-status">Live counts from the mentor and judge registration sheet.</p>
+            <div class="chart-grid chart-grid--4">
+              <div class="chart-card">
+                <div class="chart-card-header"><h3>Company</h3></div>
+                <div id="mentor-company-chart"></div>
+              </div>
+              <div class="chart-card">
+                <div class="chart-card-header"><h3>Role</h3></div>
+                <div id="mentor-role-chart"></div>
+              </div>
+              <div class="chart-card">
+                <div class="chart-card-header"><h3>Participation</h3></div>
+                <div id="mentor-participation-chart"></div>
+              </div>
+              <div class="chart-card">
+                <div class="chart-card-header"><h3>UCSD Affiliation</h3></div>
+                <div id="mentor-ucsd-chart"></div>
+              </div>
+            </div>
+          </section>
+
+        </main>
+
+        <section id="error-panel" class="error-panel hidden"></section>
+      </div>
     </div>
 
+    <script>
+      // Keep progress % in sync with the duplicate element
+      const orig = document.getElementById('goal-progress');
+      const dup  = document.getElementById('goal-progress-dup');
+      if (orig && dup) {
+        new MutationObserver(() => { dup.textContent = orig.textContent; })
+          .observe(orig, { childList: true, subtree: true, characterData: true });
+      }
+      // Set date
+      document.getElementById('topbar-date').textContent =
+        new Date().toLocaleDateString('en-US', { weekday:'long', month:'long', day:'numeric', year:'numeric' });
+    </script>
     <script src="./app.js"></script>
   </body>
 </html>

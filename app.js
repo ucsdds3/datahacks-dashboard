@@ -2,7 +2,7 @@ const CSV_URL =
   "https://docs.google.com/spreadsheets/d/e/2PACX-1vRxvOF8PBJJKdhZ4btx5Hj512rPYYD08qrEcghl6QkwvIgBF_u2hH4Dq5hxUDcMZ2J8hQfe0WcZD6ME/pub?gid=616639481&single=true&output=csv";
 const MENTOR_CSV_URL =
   "https://docs.google.com/spreadsheets/d/e/2PACX-1vS-rBG0znKuERnIsYqSnSC9g2Idu-_-gLjHkAa1aOL8oXoeriN28h_OMEo-2Tb9OXC_uR-c9MH5W668/pub?gid=408235901&single=true&output=csv";
-const REGISTRATION_GOAL = 500;
+const REGISTRATION_GOAL = 400;
 const REFRESH_INTERVAL_MS = 60_000;
 
 const FIELD_LABELS = {
