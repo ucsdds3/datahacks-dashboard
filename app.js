@@ -583,7 +583,8 @@ function computeMetrics(rows) {
 }
 
 function updateTopMetrics(metrics) {
-  const percent = metrics.total === 0 ? 0 : Math.min(100, Math.round((metrics.total / REGISTRATION_GOAL) * 100));
+  // AFTER — allows over 100%
+  const percent = metrics.total === 0 ? 0 : Math.round((metrics.total / REGISTRATION_GOAL) * 100);
 
   topElements.totalRegistrations.textContent = metrics.total.toLocaleString();
   topElements.goalProgress.textContent = `${percent}%`;
