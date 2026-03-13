@@ -532,10 +532,10 @@ function renderBarChart(targetId, items, meta = "") {
     return;
   }
 
-  const max = items[0].count || 1;
+  const max = Math.max(...items.map((item) => item.count), 1);
   const rows = items
     .map(({ label, count }) => {
-      const width = Math.max(6, Math.round((count / max) * 100));
+      const width = count === 0 ? 0 : Math.max(3, Math.round((count / max) * 100));
       return `
         <div class="chart-row">
           <div class="chart-label-line">
