@@ -1,7 +1,7 @@
 const CSV_URL =
-  "https://docs.google.com/spreadsheets/d/e/2PACX-1vRxvOF8PBJJKdhZ4btx5Hj512rPYYD08qrEcghl6QkwvIgBF_u2hH4Dq5hxUDcMZ2J8hQfe0WcZD6ME/pub?gid=616639481&single=true&output=csv";
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vQJoGWVE2HW_Us-o5KBn8D-Odow5vIig_CViWcZeZJuttr1-8lC-lXTnu2-S2H8uczuusdWGP_Ufy8H/pub?gid=616639481&single=true&output=csv";
 const MENTOR_CSV_URL =
-  "https://docs.google.com/spreadsheets/d/e/2PACX-1vS-rBG0znKuERnIsYqSnSC9g2Idu-_-gLjHkAa1aOL8oXoeriN28h_OMEo-2Tb9OXC_uR-c9MH5W668/pub?gid=408235901&single=true&output=csv";
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vTNRs26VNX8fpuF_mUkowqdeQhGEXKDjC2DMDpWwVo5lRTR2QASlfpDGFpJ8mpSsVYWF3c1cWHctrU3/pub?gid=408235901&single=true&output=csv";
 const REGISTRATION_GOAL = 400;
 const REFRESH_INTERVAL_MS = 60_000;
 
@@ -42,7 +42,6 @@ const FIELD_LABELS = {
     "If it were up to you, what’s one fun activity you’d love to see during the hackathon? (Midnight mini-games? Poker tournament? Mario Kart tournament? Churro cart? Be creative! 👀)",
   biotechFocus:
     "If you expressed interest in the biotechnology track, what broad category would your project mostly likely fall under?",
-  phone: "Phone Number",
   pmClub: "Are you a Product Management Club Member?"
 };
 
